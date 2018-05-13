@@ -10,6 +10,14 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Delm-Medium.otf">
+            <string>Delm-Medium</string>
+        </array>
+        <array key="ThirstySoftRegular.otf">
+            <string>ThirstySoftRegular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -59,12 +67,8 @@
                                                                         <rect key="frame" x="0.0" y="0.0" width="115" height="115"/>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3dV-KN-bTx">
-                                                                        <rect key="frame" x="33.5" y="33" width="48" height="48"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="48" id="dGN-Lf-cfg"/>
-                                                                            <constraint firstAttribute="width" secondItem="3dV-KN-bTx" secondAttribute="height" multiplier="1:1" id="tU3-qL-4fX"/>
-                                                                        </constraints>
-                                                                        <state key="normal" title="Button" image="Plus"/>
+                                                                        <rect key="frame" x="33.5" y="33.5" width="48" height="48"/>
+                                                                        <state key="normal" image="Plus"/>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -90,11 +94,7 @@
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8j4-uF-uhI">
                                                                         <rect key="frame" x="33" y="33" width="48" height="48"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" secondItem="8j4-uF-uhI" secondAttribute="height" multiplier="1:1" id="big-pR-2sz"/>
-                                                                            <constraint firstAttribute="width" constant="48" id="fO6-Yc-QgW"/>
-                                                                        </constraints>
-                                                                        <state key="normal" title="Button" image="Plus"/>
+                                                                        <state key="normal" image="Plus"/>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -115,11 +115,7 @@
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZVb-bg-3qU">
                                                                         <rect key="frame" x="33" y="33" width="48" height="48"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="48" id="4Uc-aX-Tae"/>
-                                                                            <constraint firstAttribute="width" secondItem="ZVb-bg-3qU" secondAttribute="height" multiplier="1:1" id="BLy-dC-fY5"/>
-                                                                        </constraints>
-                                                                        <state key="normal" title="Button" image="Plus"/>
+                                                                        <state key="normal" image="Plus"/>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -149,24 +145,15 @@
                                             <outlet property="exempleView" destination="YCK-yB-41H" id="Msu-nj-3Xw"/>
                                         </connections>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Instagrid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKl-4g-R0o">
-                                        <rect key="frame" x="166" y="51" width="67" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instagrid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKl-4g-R0o">
+                                        <rect key="frame" x="128.5" y="30" width="118.5" height="39"/>
+                                        <fontDescription key="fontDescription" name="ThirstySoftRegular" family="Thirsty Soft" pointSize="30"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Swipe up to share" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qc4-QD-RN7">
-                                        <rect key="frame" x="119" y="155.5" width="137" height="20.5"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Gg-8z-rtZ">
-                                        <rect key="frame" x="166" y="97" width="9" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe up to share" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qc4-QD-RN7">
+                                        <rect key="frame" x="107.5" y="157" width="160.5" height="29"/>
+                                        <fontDescription key="fontDescription" name="Delm-Medium" family="Delm" pointSize="26"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -211,8 +198,12 @@
                                     <constraint firstItem="CHn-NI-xTQ" firstAttribute="centerX" secondItem="XVo-9Y-scX" secondAttribute="centerX" id="3oz-vm-OgJ"/>
                                     <constraint firstAttribute="trailing" secondItem="b6v-Zb-Kl7" secondAttribute="trailing" constant="50" id="AlK-dK-s0e"/>
                                     <constraint firstItem="b6v-Zb-Kl7" firstAttribute="centerY" secondItem="XVo-9Y-scX" secondAttribute="centerY" id="IpH-t4-9n5"/>
+                                    <constraint firstItem="qc4-QD-RN7" firstAttribute="centerX" secondItem="XVo-9Y-scX" secondAttribute="centerX" id="J4t-o3-B1E"/>
                                     <constraint firstAttribute="bottom" secondItem="CHn-NI-xTQ" secondAttribute="bottom" constant="50" id="PrM-0K-l5m"/>
+                                    <constraint firstItem="b6v-Zb-Kl7" firstAttribute="top" secondItem="qc4-QD-RN7" secondAttribute="bottom" constant="10" id="eZr-Wn-fWn"/>
                                     <constraint firstItem="b6v-Zb-Kl7" firstAttribute="leading" secondItem="XVo-9Y-scX" secondAttribute="leading" constant="50" id="hGS-EG-K6T"/>
+                                    <constraint firstItem="cKl-4g-R0o" firstAttribute="top" secondItem="XVo-9Y-scX" secondAttribute="top" constant="30" id="tWJ-QC-V8R"/>
+                                    <constraint firstItem="cKl-4g-R0o" firstAttribute="centerX" secondItem="XVo-9Y-scX" secondAttribute="centerX" id="wRa-ze-NSQ"/>
                                 </constraints>
                             </view>
                         </subviews>
