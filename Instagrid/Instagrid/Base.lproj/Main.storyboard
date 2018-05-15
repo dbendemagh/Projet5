@@ -133,7 +133,7 @@
                                                 </subviews>
                                             </stackView>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.36025357250000001" green="0.55648463960000005" blue="0.78079479929999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.062745098039215685" green="0.40000000000000002" blue="0.59607843137254901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="a14-HL-gKx" firstAttribute="leading" secondItem="b6v-Zb-Kl7" secondAttribute="leading" constant="15" id="5yh-5T-txA"/>
                                             <constraint firstItem="a14-HL-gKx" firstAttribute="top" secondItem="b6v-Zb-Kl7" secondAttribute="top" constant="15" id="GEz-Ep-91H"/>
@@ -142,7 +142,10 @@
                                             <constraint firstAttribute="trailing" secondItem="a14-HL-gKx" secondAttribute="trailing" constant="15" id="klP-X7-8u3"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="exempleView" destination="YCK-yB-41H" id="Msu-nj-3Xw"/>
+                                            <outlet property="bottomLeftView" destination="Pq0-5J-KDA" id="e8h-tn-BQE"/>
+                                            <outlet property="bottomRigtView" destination="X3h-DP-5T5" id="TyC-6V-Z0X"/>
+                                            <outlet property="topLeftView" destination="Yxj-YI-PaF" id="1ng-PI-FTL"/>
+                                            <outlet property="topRightView" destination="YCK-yB-41H" id="NJC-v9-0wc"/>
                                         </connections>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instagrid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKl-4g-R0o">
@@ -193,7 +196,7 @@
                                         </constraints>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.71477452010041098" green="0.91740717552597684" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.71764705882352942" green="0.84313725490196079" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="CHn-NI-xTQ" firstAttribute="centerX" secondItem="XVo-9Y-scX" secondAttribute="centerX" id="3oz-vm-OgJ"/>
                                     <constraint firstAttribute="trailing" secondItem="b6v-Zb-Kl7" secondAttribute="trailing" constant="50" id="AlK-dK-s0e"/>

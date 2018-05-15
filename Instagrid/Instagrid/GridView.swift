@@ -10,10 +10,20 @@ import UIKit
 
 class GridView: UIView {
 
+    @IBOutlet weak var topLeftView: UIView!
+    @IBOutlet weak var topRightView: UIView!
+    @IBOutlet weak var bottomLeftView: UIView!
+    @IBOutlet weak var bottomRigtView: UIView!
     
-    @IBOutlet weak var exempleView: UIView!
-    
-    func displayPattern1() {
-        exempleView.isHidden = true
+    func displayPattern(choice: Int) {
+        switch choice {
+        case 1:
+            topLeftView.isHidden = false
+            topRightView.isHidden = true
+            bottomLeftView.isHidden = false
+            bottomRigtView.isHidden = false
+        default: break
+        //    <#code#>
+        }
     }
 }
