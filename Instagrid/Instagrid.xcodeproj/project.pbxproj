@@ -40,6 +40,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		659224FE20AB8FCB004249DA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		659224FF20AB8FDA004249DA /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				65C2A2F820A234B300C2B025 /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		6592250020AB9008004249DA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				65C2A2FA20A234B300C2B025 /* Main.storyboard */,
+				65C2A2FF20A234B400C2B025 /* LaunchScreen.storyboard */,
+				65C2A30820A3123900C2B025 /* GridView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6592250120AB9015004249DA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				65C2A2FD20A234B400C2B025 /* Assets.xcassets */,
+				659224FD20A898F8004249DA /* Delm-Medium.otf */,
+				659224FB20A898E7004249DA /* ThirstySoftRegular.otf */,
+				65C2A30220A234B400C2B025 /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		65C2A2EA20A234B300C2B025 = {
 			isa = PBXGroup;
 			children = (
@@ -59,15 +95,11 @@
 		65C2A2F520A234B300C2B025 /* Instagrid */ = {
 			isa = PBXGroup;
 			children = (
+				6592250120AB9015004249DA /* Supporting Files */,
+				659224FE20AB8FCB004249DA /* Model */,
+				6592250020AB9008004249DA /* Views */,
+				659224FF20AB8FDA004249DA /* Controllers */,
 				65C2A2F620A234B300C2B025 /* AppDelegate.swift */,
-				65C2A2F820A234B300C2B025 /* ViewController.swift */,
-				65C2A2FA20A234B300C2B025 /* Main.storyboard */,
-				65C2A30820A3123900C2B025 /* GridView.swift */,
-				65C2A2FD20A234B400C2B025 /* Assets.xcassets */,
-				659224FD20A898F8004249DA /* Delm-Medium.otf */,
-				659224FB20A898E7004249DA /* ThirstySoftRegular.otf */,
-				65C2A2FF20A234B400C2B025 /* LaunchScreen.storyboard */,
-				65C2A30220A234B400C2B025 /* Info.plist */,
 			);
 			path = Instagrid;
 			sourceTree = "<group>";

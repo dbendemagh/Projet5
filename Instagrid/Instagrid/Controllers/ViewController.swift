@@ -11,6 +11,8 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var gridView: GridView!
+
+    @IBOutlet var layoutButtons: [UIButton]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,8 +21,9 @@ class ViewController: UIViewController {
         
     }
 
-    
-
-
 }
 
+extension ViewController {
+    
+    
+}
