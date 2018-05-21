@@ -13,17 +13,21 @@ class GridView: UIView {
     @IBOutlet weak var topLeftView: UIView!
     @IBOutlet weak var topRightView: UIView!
     @IBOutlet weak var bottomLeftView: UIView!
-    @IBOutlet weak var bottomRigtView: UIView!
+    @IBOutlet weak var bottomRigtView: UIView! // Right
     
+    // buttonTag
     func displayPattern(choice: Int) {
         switch choice {
-        case 1:
-            topLeftView.isHidden = false
+        case 0:
             topRightView.isHidden = true
-            bottomLeftView.isHidden = false
             bottomRigtView.isHidden = false
-        default: break
-        //    <#code#>
+            
+        case 1:
+            print("1")
+        case 2:
+            print("2")
+        default:
+            break
         }
     }
 }

@@ -8,11 +8,13 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var gridView: GridView!
 
     @IBOutlet var layoutButtons: [UIButton]!
+    
+    @IBOutlet weak var topLeftImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +23,23 @@ class ViewController: UIViewController {
         
     }
 
+    @IBAction func patternButtonTapped(_ sender: UIButton) {
+        unselectButtons()
+        
+        layoutButtons[sender.tag].isSelected = true
+        gridView.displayPattern(choice: sender.tag)
+    }
+    
+    func unselectButtons() {
+        layoutButtons.forEach { (button) in
+            button.isSelected = false
+        }
+    }
+    
+    
+    @IBAction func topLeftButtonTapped(_ sender: UIButton) {
+        
+    }
 }
 
 extension ViewController {

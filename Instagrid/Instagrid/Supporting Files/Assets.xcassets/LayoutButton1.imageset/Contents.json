@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Up.png",
+      "filename" : "LayoutButton1.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "LayoutButton1@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "LayoutButton1@3x.png",
       "scale" : "3x"
     }
   ],
