@@ -73,6 +73,9 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3dV-KN-bTx">
                                                                         <rect key="frame" x="42.666666666666657" y="42.666666666666686" width="48" height="49"/>
                                                                         <state key="normal" image="Plus"/>
+                                                                        <connections>
+                                                                            <action selector="topRightButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="c5p-Fz-gQC"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -99,6 +102,9 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8j4-uF-uhI">
                                                                         <rect key="frame" x="42.666666666666671" y="42.666666666666629" width="48" height="49"/>
                                                                         <state key="normal" image="Plus"/>
+                                                                        <connections>
+                                                                            <action selector="bottomLeftButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zw4-XL-LO5"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -120,6 +126,9 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZVb-bg-3qU">
                                                                         <rect key="frame" x="42.666666666666657" y="42.666666666666629" width="48" height="49"/>
                                                                         <state key="normal" image="Plus"/>
+                                                                        <connections>
+                                                                            <action selector="bottomRightButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="J4m-9b-m08"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -199,7 +208,7 @@
                                                     <constraint firstAttribute="width" secondItem="NYC-HE-r8K" secondAttribute="height" multiplier="1:1" id="OM0-7Z-g3n"/>
                                                     <constraint firstAttribute="width" constant="85" id="o4b-vl-0CT"/>
                                                 </constraints>
-                                                <state key="normal" image="SelectedButton" backgroundImage="LayoutButton1"/>
+                                                <state key="normal" backgroundImage="LayoutButton1"/>
                                                 <state key="selected" image="Selected" backgroundImage="LayoutButton1"/>
                                                 <variation key="default">
                                                     <mask key="constraints">
@@ -365,8 +374,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="bottomLeftImageView" destination="FKz-Fm-ExQ" id="BAA-1W-Wtk"/>
+                        <outlet property="bottomRightImageView" destination="I2T-0K-06B" id="gxx-sq-glw"/>
                         <outlet property="gridView" destination="b6v-Zb-Kl7" id="f5g-wP-QuB"/>
                         <outlet property="topLeftImageView" destination="qla-0Z-d0L" id="oh7-lb-WRc"/>
+                        <outlet property="topRightImageView" destination="KHE-vT-SkQ" id="ydf-MZ-89Z"/>
                         <outletCollection property="layoutButtons" destination="4WE-GQ-mT7" collectionClass="NSMutableArray" id="7O9-Oj-wKy"/>
                         <outletCollection property="layoutButtons" destination="NYC-HE-r8K" collectionClass="NSMutableArray" id="IB1-c0-beB"/>
                         <outletCollection property="layoutButtons" destination="IX7-v9-Vz2" collectionClass="NSMutableArray" id="Qw1-LU-Y44"/>
