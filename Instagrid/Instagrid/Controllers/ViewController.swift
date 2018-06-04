@@ -12,33 +12,47 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
     @IBOutlet weak var gridView: GridView!
 
+    // pluriel
+    @IBOutlet var photoImageView: [UIImageView]!
     @IBOutlet var layoutButtons: [UIButton]!
+    @IBOutlet weak var arrowUpImageView: UIImageView!
     
-    @IBOutlet weak var topLeftImageView: UIImageView!
-    @IBOutlet weak var topRightImageView: UIImageView!
-    @IBOutlet weak var bottomLeftImageView: UIImageView!
-    @IBOutlet weak var bottomRightImageView: UIImageView!
+    var imageSelected: Int = 0
     
-    enum imagePosition {
-        case topLeft, topRight, bottomLeft, bottomRight
-    }
-
-    // Image destination on the layout
-    var imageDestination: imagePosition? = nil
+    let imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        sortIBOutletCollectionAscending()
+        
+        imagePicker.delegate = self
+        
+        addGesturesRecognizer()
+        
+        // start with the second layout
         gridView.displayLayout(buttonTag: 1)
         
+        
     }
-
-    // Select layout buttons
-    @IBAction func patternButtonTapped(_ sender: UIButton) {
+    
+    
+    // Each Item of IBOutlet Collection must match with View Tag (0, 1, 2, ...)
+    func sortIBOutletCollectionAscending() {
+        layoutButtons.sort(by: {$0.tag < $1.tag})
+        photoImageView.sort(by: {$0.tag < $1.tag})
+        gridView.sortIBOutletCollectionAscending()
+    }
+    
+    // Manage Layout buttons
+    @IBAction func layoutButtonTapped(_ sender: UIButton) {
+        //debugPrint(sender.tag)
+        let tag = sender.tag
+        print("Tag bouton : \(tag)")
         unselectButtons()
         
         layoutButtons[sender.tag].isSelected = true
-        gridView.displayLayout(buttonTag: sender.tag)
+        gridView.displayLayout(buttonTag: tag)
     }
     
     // Unselect buttons
@@ -48,57 +62,92 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
     }
     
-    // Add image buttons
-    @IBAction func topLeftButtonTapped(_ sender: UIButton) {
-        imageDestination = imagePosition.topLeft
-        getImageFromLibrary()
+    @IBAction func plusButtonTapped(_ sender: UIButton) {
+        let tag = sender.tag
+        print("Tag plus : \(tag)")
+        imageSelected = tag
+        //getImageFromLibrary()
+        chooseMedia(title: "Add image")
     }
     
-    @IBAction func topRightButtonTapped(_ sender: UIButton) {
-        imageDestination = imagePosition.topRight
-        getImageFromLibrary()
+    func chooseMedia(title: String) {
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Take from Photo Library", style: .default, handler: { (action) in
+            self.getImageFromLibrary()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Take a photo", style: .default, handler: { (action) in
+            self.getImageFromLibrary()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
-    @IBAction func bottomLeftButtonTapped(_ sender: UIButton) {
-        imageDestination = imagePosition.bottomLeft
-        getImageFromLibrary()
+}
+
+extension ViewController {
+    
+    private func addGesturesRecognizer() {
+        [photoImageView[0], photoImageView[1], photoImageView[2],photoImageView[3]].forEach {
+            swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(imageTapped(gesture:)))
+            
+            
+            $0.addGestureRecognizer(UISwipeGestureRecognizer(target: self, action: #selector(imageTapped(gesture:))))
+            //$0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped(gesture:))))
+            $0.isUserInteractionEnabled = true
+        }
+        
+        arrowUpImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped(gesture:))))
+        
+        // ???????
+        photoImageView.forEach {
+            //(element: [UIImageView]?) in
+            
+//            if let e = element as? UIImageView {
+                $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped(gesture:))))
+//            }
+        }
+        
+        //let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(dragQuestionView(_:)))
+        //arrowUpImageView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragArrowView(_:))))
+        
     }
     
-    @IBAction func bottomRightButtonTapped(_ sender: UIButton) {
-        imageDestination = imagePosition.bottomRight
-        getImageFromLibrary()
+    
+        @objc func imageTapped(gesture: UIGestureRecognizer) {
+        
+        guard let tag = gesture.view?.tag else { return }
+        
+        //if !layoutButtons[tag].isHidden {
+        if gridView.plusIsHidden(tag: tag) {
+            //print("\(tag) Plus caché")
+            chooseMedia(title: "Change image")
+        } else {
+            print("\(tag) Pas caché")
+            
+        }
+    }
+    
+    @objc func dragArrowView(_ sender: UIPanGestureRecognizer) {
+        
     }
     
     // Call the Photo Library
     func getImageFromLibrary() {
-        let imagePicker = UIImagePickerController()
         imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-        imagePicker.delegate = self
-        self.present(imagePicker, animated: true, completion: nil)
+        present(imagePicker, animated: true, completion: nil)
     }
     
     // set Image from Photo Library at the right position
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            if let destination = imageDestination {
-                switch destination {
-                case .topLeft:
-                    topLeftImageView.image = pickedImage
-                case .topRight:
-                    topRightImageView.image = pickedImage
-                case .bottomLeft:
-                    bottomLeftImageView.image = pickedImage
-                case .bottomRight:
-                    bottomRightImageView.image = pickedImage
-                }
-            }
+            gridView.setPhoto(photo: pickedImage, tag: imageSelected)
             
             dismiss(animated: true, completion: nil)
         }
     }
 }
 
-extension ViewController {
-    
-    
-}
