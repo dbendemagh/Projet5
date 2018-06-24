@@ -15,7 +15,6 @@ class MainVC: UIViewController {
     @IBOutlet var layoutButtons: [UIButton]!
     @IBOutlet weak var arrowImageView: UIImageView!
     @IBOutlet weak var shareStackView: UIStackView!
-    @IBOutlet weak var swipeLabel: UILabel!
     
     var swipeGestureRecognizer: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveGridview))
     
@@ -46,9 +45,8 @@ class MainVC: UIViewController {
     
     // Manage Layout buttons
     @IBAction func layoutButtonTapped(_ sender: UIButton) {
-        //debugPrint(sender.tag)
         let tag = sender.tag
-        print("Tag bouton : \(tag)")
+        //print("Tag bouton : \(tag)")
         unselectButtons()
         
         layoutButtons[sender.tag].isSelected = true
@@ -75,11 +73,11 @@ class MainVC: UIViewController {
         switch UIDevice.current.orientation {
         case .portrait:
             print("portrait")
-            swipeLabel.text = "Swipe up to share"
+            gridView.setLabelText(text: "Swipe up to share")
             swipeGestureRecognizer.direction = .up
         case .landscapeLeft, .landscapeRight:
             print("landscape")
-            swipeLabel.text = "Swipe left to share"
+            gridView.setLabelText(text: "Swipe left to share")
             swipeGestureRecognizer.direction = .left
         default:
             break
@@ -115,7 +113,6 @@ class MainVC: UIViewController {
         })
     }
     
-    // (photo.superview?.isHidden)!
     func missingImage() -> Bool {
         for photo in gridView.photoImageViews {
             // If Parent View not hidden and image is nul, missing image
@@ -133,7 +130,6 @@ class MainVC: UIViewController {
             alert(title: "Missing image", message: "You have not selected all images.") {
                 // Go back
                 self.animateGridviewBack(duration: 0.3)
-                //self.moveGridview(transform: gridView.transform.id .identity, duration: 0.3)
             }
         } else {
             shareImage()
@@ -151,9 +147,6 @@ class MainVC: UIViewController {
             }
         }
     }
-//}
-
-//extension MainVC {
     
     private func addGesturesRecognizer() {
         // Gesture for Images
@@ -174,33 +167,7 @@ class MainVC: UIViewController {
         guard let tag = gesture.view?.tag else { return }
         
         if gridView.plusIsHidden(tag: tag) {
-            //print("\(tag) Plus caché")
             chooseMedia(title: "Change image")
-        } else {
-            print("\(tag) Pas caché")
-        }
-    }
-    
-    func transformGridviewWith(gesture: UIPanGestureRecognizer) {
-        //print(shareStackView.frame.origin.y)
-        
-        let translation = gesture.translation(in: shareStackView)
-        
-        switch UIDevice.current.orientation {
-        case .portrait:
-            // Up ?
-            if translation.y < 0 {
-                shareStackView.transform = CGAffineTransform(translationX: 0, y: translation.y)
-                gridView.transform = CGAffineTransform(translationX: 0, y: translation.y)
-            }
-        case .landscapeLeft, .landscapeRight:
-            // Landscape ?
-            if translation.x < 0 {
-                shareStackView.transform = CGAffineTransform(translationX: translation.x, y: 0)
-                gridView.transform = CGAffineTransform(translationX: translation.x, y: 0)
-            }
-        default:
-            break
         }
     }
     
@@ -232,6 +199,7 @@ extension MainVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
         self.present(alert, animated: true, completion: nil)
     }
     
+    // Get image from Photo Library or Camera
     func getImageFrom(sourceType: UIImagePickerControllerSourceType) {
         imagePicker.sourceType = sourceType
         present(imagePicker, animated: true, completion: nil)

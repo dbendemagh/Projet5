@@ -155,6 +155,7 @@
                                             <constraint firstAttribute="trailing" secondItem="a14-HL-gKx" secondAttribute="trailing" constant="15" id="klP-X7-8u3"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="swipeLabel" destination="qc4-QD-RN7" id="4QK-Ym-MEk"/>
                                             <outletCollection property="plusButtons" destination="N9T-DM-Cax" collectionClass="NSMutableArray" id="MB1-xu-YI9"/>
                                             <outletCollection property="plusButtons" destination="3dV-KN-bTx" collectionClass="NSMutableArray" id="uJj-D3-gmX"/>
                                             <outletCollection property="plusButtons" destination="8j4-uF-uhI" collectionClass="NSMutableArray" id="DYT-t6-2bS"/>
@@ -275,7 +276,6 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.71764705882352942" green="0.84313725490196079" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="CHn-NI-xTQ" firstAttribute="centerX" secondItem="XVo-9Y-scX" secondAttribute="centerX" id="3oz-vm-OgJ"/>
                                     <constraint firstItem="nMj-Nn-UPi" firstAttribute="centerX" secondItem="XVo-9Y-scX" secondAttribute="centerX" id="6qb-f8-J1Q"/>
@@ -302,9 +302,9 @@
                                         <exclude reference="wk7-Yk-bmZ"/>
                                     </mask>
                                     <mask key="constraints">
+                                        <exclude reference="Rnz-Ut-drn"/>
                                         <exclude reference="FpY-NR-eH7"/>
                                         <exclude reference="J2G-eu-J73"/>
-                                        <exclude reference="Rnz-Ut-drn"/>
                                         <exclude reference="P0k-rg-4lw"/>
                                         <exclude reference="WAg-YF-uYs"/>
                                         <exclude reference="esW-52-WKe"/>
@@ -319,11 +319,11 @@
                                         <exclude reference="wk7-Yk-bmZ"/>
                                     </mask>
                                     <mask key="constraints">
+                                        <exclude reference="6qb-f8-J1Q"/>
+                                        <include reference="Rnz-Ut-drn"/>
                                         <include reference="FpY-NR-eH7"/>
                                         <exclude reference="J2G-eu-J73"/>
                                         <exclude reference="tWJ-QC-V8R"/>
-                                        <exclude reference="6qb-f8-J1Q"/>
-                                        <include reference="Rnz-Ut-drn"/>
                                         <exclude reference="AlK-dK-s0e"/>
                                         <exclude reference="IpH-t4-9n5"/>
                                         <include reference="P0k-rg-4lw"/>
@@ -341,20 +341,19 @@
                                 </variation>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.71764705880000002" green="0.84313725490000002" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="XVo-9Y-scX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="TEj-sU-CJp"/>
-                            <constraint firstItem="XVo-9Y-scX" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="lLd-nn-5tf"/>
-                            <constraint firstItem="XVo-9Y-scX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="q5P-Qv-RVU"/>
-                            <constraint firstItem="XVo-9Y-scX" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="v10-CW-wwu"/>
+                            <constraint firstItem="XVo-9Y-scX" firstAttribute="leading" secondItem="cvo-Ye-GUh" secondAttribute="leading" id="TEj-sU-CJp"/>
+                            <constraint firstItem="XVo-9Y-scX" firstAttribute="trailing" secondItem="cvo-Ye-GUh" secondAttribute="trailing" id="lLd-nn-5tf"/>
+                            <constraint firstItem="XVo-9Y-scX" firstAttribute="top" secondItem="cvo-Ye-GUh" secondAttribute="top" id="q5P-Qv-RVU"/>
+                            <constraint firstItem="XVo-9Y-scX" firstAttribute="bottom" secondItem="cvo-Ye-GUh" secondAttribute="bottom" id="v10-CW-wwu"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <viewLayoutGuide key="safeArea" id="cvo-Ye-GUh"/>
                     </view>
                     <connections>
                         <outlet property="arrowImageView" destination="x8T-A2-uaa" id="kHw-UG-kKh"/>
                         <outlet property="gridView" destination="b6v-Zb-Kl7" id="f5g-wP-QuB"/>
                         <outlet property="shareStackView" destination="nMj-Nn-UPi" id="jxH-ua-h5G"/>
-                        <outlet property="swipeLabel" destination="qc4-QD-RN7" id="QhL-85-wWE"/>
                         <outletCollection property="layoutButtons" destination="4WE-GQ-mT7" collectionClass="NSMutableArray" id="7O9-Oj-wKy"/>
                         <outletCollection property="layoutButtons" destination="NYC-HE-r8K" collectionClass="NSMutableArray" id="IB1-c0-beB"/>
                         <outletCollection property="layoutButtons" destination="IX7-v9-Vz2" collectionClass="NSMutableArray" id="Qw1-LU-Y44"/>

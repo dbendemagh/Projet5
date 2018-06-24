@@ -9,11 +9,6 @@
 import UIKit
 
 class GridView: UIView {
-
-    //@IBOutlet weak var topLeftView: UIView!
-    //@IBOutlet weak var topRightView: UIView!
-    //@IBOutlet weak var bottomLeftView: UIView!
-    //@IBOutlet weak var bottomRigtView: UIView! // Right
     
     enum Position: Int {
         case topLeft, topRight, bottomLeft, bottomRight
@@ -21,6 +16,7 @@ class GridView: UIView {
     
     @IBOutlet weak var gridView: GridView!
     @IBOutlet weak var gridViewView: UIView!
+    @IBOutlet weak var swipeLabel: UILabel!
     
     @IBOutlet var containerViews: [UIView]!
     @IBOutlet var photoImageViews: [UIImageView]!
@@ -29,7 +25,6 @@ class GridView: UIView {
     func sortIBOutletCollectionAscending() {
         containerViews.sort(by: {$0.tag < $1.tag})
         photoImageViews.sort(by: {$0.tag < $1.tag})
-        //plusButtons = plusButtons.sorted(by: {$0.tag < $1.tag})
         plusButtons.sort(by: {$0.tag < $1.tag})
     }
     
@@ -58,6 +53,10 @@ class GridView: UIView {
     
     func plusIsHidden(tag: Int) -> Bool {
         return plusButtons[tag].isHidden
+    }
+    
+    func setLabelText(text: String) {
+        swipeLabel.text = text
     }
     
     func setPhoto(photo: UIImage, tag: Int) {
