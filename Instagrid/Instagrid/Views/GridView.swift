@@ -15,7 +15,6 @@ class GridView: UIView {
     }
     
     @IBOutlet weak var gridView: GridView!
-    @IBOutlet weak var gridViewView: UIView!
     @IBOutlet weak var swipeLabel: UILabel!
     
     @IBOutlet var containerViews: [UIView]!

@@ -22,6 +22,9 @@ class MainVC: UIViewController {
     
     let imagePicker = UIImagePickerController()
     
+    let backgroundColors = [#colorLiteral(red: 0.06274509804, green: 0.4, blue: 0.5960784314, alpha: 1),#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1),#colorLiteral(red: 0.5807225108, green: 0.066734083, blue: 0, alpha: 1),#colorLiteral(red: 0.5704585314, green: 0.5704723597, blue: 0.5704649091, alpha: 1),#colorLiteral(red: 0.5058823824, green: 0.3372549117, blue: 0.06666667014, alpha: 1)]
+    var colorIndex = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -160,6 +163,11 @@ class MainVC: UIViewController {
         swipeGestureRecognizer.direction = .up
         arrowImageView.addGestureRecognizer(swipeGestureRecognizer)
         arrowImageView.isUserInteractionEnabled = true
+        
+        // Gesture for double tap on Gridview
+        let TapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(gridviewDoubleTapped(gesture:)))
+        TapGestureRecogniser.numberOfTapsRequired = 2
+        gridView.addGestureRecognizer(TapGestureRecogniser)
     }
     
     @objc func imageTapped(gesture: UIGestureRecognizer) {
@@ -167,8 +175,22 @@ class MainVC: UIViewController {
         guard let tag = gesture.view?.tag else { return }
         
         if gridView.plusIsHidden(tag: tag) {
+            imageSelected = tag
             chooseMedia(title: "Change image")
         }
+    }
+    
+    @objc func gridviewDoubleTapped(gesture: UITapGestureRecognizer) {
+        gridView.backgroundColor = nextBackgroundColor()
+    }
+    
+    func nextBackgroundColor() -> UIColor {
+        colorIndex = colorIndex + 1
+        if colorIndex > backgroundColors.count - 1 {
+            colorIndex = 0
+        }
+        
+        return backgroundColors[colorIndex]
     }
     
     func alert(title: String, message: String, actionButton: @escaping () -> ()) {
