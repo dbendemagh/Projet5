@@ -64,4 +64,15 @@ class GridView: UIView {
         
         displayPlus(isHidden: true, tag: tag)
     }
+    
+    func eraseImages() {
+        for photo in photoImageViews {
+            photo.image = nil
+        }
+        
+        for button in plusButtons {
+            button.isHidden = false
+        }
+        
+    }
 }
