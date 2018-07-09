@@ -11,31 +11,36 @@ import UIKit
 class MainVC: UIViewController {
 
     @IBOutlet weak var gridView: GridView!
-    
     @IBOutlet var layoutButtons: [UIButton]!
     @IBOutlet weak var arrowImageView: UIImageView!
     @IBOutlet weak var shareStackView: UIStackView!
     
-    var sharingSwipeGR: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(sharingMove))
-    var erasingSwipeGR: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(erasingMove))
+    private var imageSelected: Int = 0
     
-    var imageSelected: Int = 0
+    private lazy var shareSwipeGR: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(shareEvent))
+    private lazy var eraseSwipeGR: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(eraseEvent))
     
-    let imagePicker = UIImagePickerController()
+    private lazy var imagePicker: UIImagePickerController = {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        return imagePicker
+    }()
     
-    let backgroundColors = [#colorLiteral(red: 0.06274509804, green: 0.4, blue: 0.5960784314, alpha: 1),#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1),#colorLiteral(red: 0.5807225108, green: 0.066734083, blue: 0, alpha: 1),#colorLiteral(red: 0.5704585314, green: 0.5704723597, blue: 0.5704649091, alpha: 1),#colorLiteral(red: 0.5058823824, green: 0.3372549117, blue: 0.06666667014, alpha: 1)]
-    var colorIndex = 0
+    enum ActionType {
+        case share
+        case erase
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        gridView.displayAlertDelegate = self
+        
         setupBehaviors()
     }
     
-    func setupBehaviors() {
+    private func setupBehaviors() {
         sortIBOutletCollectionAscending()
-        
-        imagePicker.delegate = self
         
         addGesturesRecognizer()
         
@@ -43,19 +48,39 @@ class MainVC: UIViewController {
         
         // start with the second layout
         gridView.displayLayout(buttonTag: 1)
-        
     }
     
-    // Each Item of IBOutlet Collection must match with View Tag (0, 1, 2, ...)
-    func sortIBOutletCollectionAscending() {
+    // IBOutlets and View tags must be in the same order
+    private func sortIBOutletCollectionAscending() {
         layoutButtons.sort(by: {$0.tag < $1.tag})
         gridView.sortIBOutletCollectionAscending()
+    }
+    
+    private func addGesturesRecognizer() {
+        // Images gesture recognizer
+        gridView.photoImageViews.forEach {
+            $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped(gesture:))))
+            $0.isUserInteractionEnabled = true
+        }
+        
+        // Share Gesture recognizer
+        shareSwipeGR.direction = .up
+        arrowImageView.addGestureRecognizer(shareSwipeGR)
+        arrowImageView.isUserInteractionEnabled = true
+        
+        // Bonus - Double tap gesture recognizer on Gridview
+        let TapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(gridviewDoubleTapped(gesture:)))
+        TapGestureRecogniser.numberOfTapsRequired = 2
+        gridView.addGestureRecognizer(TapGestureRecogniser)
+        
+        // Bonus - Erase Gesture recognizer on Gridview
+        eraseSwipeGR.direction = .down
+        gridView.addGestureRecognizer(eraseSwipeGR)
     }
     
     // Manage Layout buttons
     @IBAction func layoutButtonTapped(_ sender: UIButton) {
         let tag = sender.tag
-        //print("Tag bouton : \(tag)")
         unselectButtons()
         
         layoutButtons[sender.tag].isSelected = true
@@ -63,7 +88,7 @@ class MainVC: UIViewController {
     }
     
     // Unselect buttons
-    func unselectButtons() {
+    private func unselectButtons() {
         layoutButtons.forEach { (button) in
             button.isSelected = false
         }
@@ -72,94 +97,82 @@ class MainVC: UIViewController {
     @IBAction func plusButtonTapped(_ sender: UIButton) {
         let tag = sender.tag
         imageSelected = tag
-
+        
         chooseMedia(title: "Add image")
     }
     
-    @objc func deviceOrientionDidChange() {
-        print(UIDevice.current.orientation)
-        
+    @objc private func deviceOrientionDidChange() {
         switch UIDevice.current.orientation {
         case .portrait:
-            print("portrait")
             gridView.setLabelText(text: "Swipe up to share")
-            sharingSwipeGR.direction = .up
-            erasingSwipeGR.direction = .down
+            shareSwipeGR.direction = .up
+            eraseSwipeGR.direction = .down
         case .landscapeLeft, .landscapeRight:
-            print("landscape")
             gridView.setLabelText(text: "Swipe left to share")
-            sharingSwipeGR.direction = .left
-            erasingSwipeGR.direction = .right
+            shareSwipeGR.direction = .left
+            eraseSwipeGR.direction = .right
         default:
             break
         }
     }
     
-    @objc func sharingMove() {
+    @objc private func shareEvent() {
+        gridAction(actionType: .share)
+    }
+    
+    @objc private func eraseEvent() {
+        gridAction(actionType: .erase)
+    }
+    
+    private func gridAction(actionType: ActionType) {
+        // Share : up or left animation
+        var position = -view.frame.height
+        
+        if actionType == .erase {
+            // Erase : right or down animation
+            position = abs(position)
+        }
+        
         switch UIDevice.current.orientation {
         case .portrait:
-            sharingAnimation(transform: CGAffineTransform(translationX: 0, y: -view.frame.height), duration: 0.5)
+            gridAnimation(actionType: actionType, transform: CGAffineTransform(translationX: 0, y: position))
+            //shareAnimation(transform: CGAffineTransform(translationX: 0, y: position), duration: 0.5)
         case .landscapeLeft, .landscapeRight:
-            sharingAnimation(transform: CGAffineTransform(translationX: -view.frame.width, y: 0), duration: 0.5)
+            gridAnimation(actionType: actionType, transform: CGAffineTransform(translationX: position, y: 0))
+            //shareAnimation(transform: CGAffineTransform(translationX: position, y: 0), duration: 0.5)
         default:
             break
         }
     }
     
-    @objc func erasingMove() {
-        switch UIDevice.current.orientation {
-        case .portrait:
-            erasingAnimation(transform: CGAffineTransform(translationX: 0, y: view.frame.height), duration: 0.5)
-        case .landscapeLeft, .landscapeRight:
-            erasingAnimation(transform: CGAffineTransform(translationX: view.frame.width, y: 0), duration: 0.5)
-        default:
-            break
-        }
-    }
-    
-    func sharingAnimation(transform: CGAffineTransform, duration: TimeInterval) {
-        
-        UIView.animate(withDuration: duration, animations: {
-            self.shareStackView.transform = transform
+    private func gridAnimation(actionType: ActionType, transform: CGAffineTransform) {
+        UIView.animate(withDuration: 0.5, animations: {
+            if actionType == .share {
+                self.shareStackView.transform = transform
+            }
             self.gridView.transform = transform
         }) { _ in
-            self.shareControl()
+            if actionType == .share {
+                self.share()
+            } else {
+                self.gridView.eraseGrid()
+            }
         }
     }
     
-    func erasingAnimation(transform: CGAffineTransform, duration: TimeInterval) {
-        
-        UIView.animate(withDuration: duration, animations: {
-            self.gridView.transform = transform
-        }) { _ in
-            self.eraseImages()
-        }
-    }
-    
-    func animateGridviewBack(duration: TimeInterval) {
-        UIView.animate(withDuration: duration, animations: {
-            self.shareStackView.transform = .identity
+    private func gridAnimationBack(actionType: ActionType) {
+        UIView.animate(withDuration: 0.3, animations: {
+            if actionType == .share {
+                self.shareStackView.transform = .identity
+            }
             self.gridView.transform = .identity
         })
     }
-    
-    func missingImage() -> Bool {
-        for photo in gridView.photoImageViews {
-            // If Parent View not hidden and image is nul, missing image
-            guard let superview = photo.superview else { return false}
-            if !superview.isHidden && photo.image == nil {
-                return true
-            }
-        }
-        
-        return false
-    }
-    
-    func shareControl() {
-        if missingImage() {
+
+    private func share() {
+        if gridView.missingImage() {
             alert(title: "Missing image", message: "You have not selected all images.") {
-                // Go back
-                self.animateGridviewBack(duration: 0.3)
+                self.gridAnimationBack(actionType: .share)
             }
         } else {
             shareImage()
@@ -173,43 +186,9 @@ class MainVC: UIViewController {
         
         activityController.completionWithItemsHandler = {(nil, completed: Bool, _, error) in
             if !completed {
-                self.animateGridviewBack(duration: 0.5)
+                self.gridAnimationBack(actionType: .share)
             }
         }
-    }
-    
-    func eraseImages() {
-
-            gridView.eraseImages()
-            gridView.backgroundColor = #colorLiteral(red: 0.06274509804, green: 0.4, blue: 0.5960784314, alpha: 1)
-            colorIndex = 0
-        
-            self.animateGridviewBack(duration: 0.3)
-        
-    }
-    
-    private func addGesturesRecognizer() {
-        // Gesture for Images
-        gridView.photoImageViews.forEach {
-            $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped(gesture:))))
-            $0.isUserInteractionEnabled = true
-        }
-        
-        // Gesture for Arrow
-        sharingSwipeGR = UISwipeGestureRecognizer(target: self, action: #selector(sharingMove))
-        sharingSwipeGR.direction = .up
-        arrowImageView.addGestureRecognizer(sharingSwipeGR)
-        arrowImageView.isUserInteractionEnabled = true
-        
-        // Bonus - Gesture for double tap on Gridview
-        let TapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(gridviewDoubleTapped(gesture:)))
-        TapGestureRecogniser.numberOfTapsRequired = 2
-        gridView.addGestureRecognizer(TapGestureRecogniser)
-        
-        // Bonus - Gesture for Gridview (Erase images)
-        erasingSwipeGR = UISwipeGestureRecognizer(target: self, action: #selector(erasingMove))
-        erasingSwipeGR.direction = .down
-        gridView.addGestureRecognizer(erasingSwipeGR)
     }
     
     @objc func imageTapped(gesture: UIGestureRecognizer) {
@@ -223,18 +202,15 @@ class MainVC: UIViewController {
     }
     
     @objc func gridviewDoubleTapped(gesture: UITapGestureRecognizer) {
-        gridView.backgroundColor = nextBackgroundColor()
+        gridView.setBackgroundColor()
     }
     
-    func nextBackgroundColor() -> UIColor {
-        colorIndex = colorIndex + 1
-        if colorIndex > backgroundColors.count - 1 {
-            colorIndex = 0
-        }
-        
-        return backgroundColors[colorIndex]
-    }
-    
+    /// Alert info
+    ///
+    /// - Parameters:
+    ///   - title: Alert title
+    ///   - message: Alert message
+    ///   - actionButton: Method for OK button
     func alert(title: String, message: String, actionButton: @escaping () -> ()) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
@@ -273,9 +249,26 @@ extension MainVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             gridView.setPhoto(photo: pickedImage, tag: imageSelected)
-            
             dismiss(animated: true, completion: nil)
         }
     }
+}
+
+extension MainVC: GridViewDelegate {
+    // Question alert before erase grid
+    func eraseAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            //self.gridView.eraseImages()
+            self.gridView.resetGrid()
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            self.gridAnimationBack(actionType: .erase)
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
 }
 
