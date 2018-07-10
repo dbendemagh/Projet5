@@ -207,15 +207,15 @@ class MainVC: UIViewController {
         gridView.setBackgroundColor()
     }
     
-    /// showAlert info
+    /// showAlert display an Alert message. You can add an action to execute after the Alert message.
     ///
     /// - Parameters:
     ///   - title: Alert title
     ///   - message: Alert message
-    ///   - actionButton: Method for OK button
+    ///   - actionButton: The action to execute. For no action, specifie {}.
     func showAlert(title: String, message: String, actionButton: @escaping () -> ()) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
             actionButton()
         }))
@@ -243,8 +243,12 @@ extension MainVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
     
     // Get image from Photo Library or Camera
     func getImageFrom(sourceType: UIImagePickerControllerSourceType) {
-        imagePicker.sourceType = sourceType
-        present(imagePicker, animated: true, completion: nil)
+        if (UIImagePickerController .isSourceTypeAvailable(sourceType)) {
+            imagePicker.sourceType = sourceType
+            present(imagePicker, animated: true, completion: nil)
+        } else {
+            showAlert(title: "Erreur", message: "Le media n'est pas disponible." , actionButton: {})
+        }
     }
     
     // set Image at the right position
