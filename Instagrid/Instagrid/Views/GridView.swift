@@ -9,23 +9,21 @@
 import UIKit
 
 protocol GridViewDelegate {
-    func eraseAlert(title: String, message: String)
+    func showEraseAlert(title: String, message: String)
 }
 
 class GridView: UIView {
-
-    private let backgroundColors = [#colorLiteral(red: 0.06274509804, green: 0.4, blue: 0.5960784314, alpha: 1),#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1),#colorLiteral(red: 0.5807225108, green: 0.066734083, blue: 0, alpha: 1),#colorLiteral(red: 0.5704585314, green: 0.5704723597, blue: 0.5704649091, alpha: 1),#colorLiteral(red: 0.5058823824, green: 0.3372549117, blue: 0.06666667014, alpha: 1)]
-    private var colorIndex = 0
     
     var displayAlertDelegate: GridViewDelegate!
+    
+    private let backgroundColors = [#colorLiteral(red: 0.06274509804, green: 0.4, blue: 0.5960784314, alpha: 1),#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1),#colorLiteral(red: 0.5807225108, green: 0.066734083, blue: 0, alpha: 1),#colorLiteral(red: 0.5704585314, green: 0.5704723597, blue: 0.5704649091, alpha: 1),#colorLiteral(red: 0.5058823824, green: 0.3372549117, blue: 0.06666667014, alpha: 1)]
+    private var colorIndex = 0
     
     enum Position: Int {
         case topLeft, topRight, bottomLeft, bottomRight
     }
     
-    @IBOutlet weak var gridView: GridView!
     @IBOutlet private weak var swipeLabel: UILabel!
-    
     @IBOutlet private var containerViews: [UIView]!
     @IBOutlet var photoImageViews: [UIImageView]!
     @IBOutlet private var plusButtons: [UIButton]!
@@ -72,13 +70,12 @@ class GridView: UIView {
         displayPlus(isHidden: true, tag: tag)
     }
     
-    func eraseImages() {
-        for photo in photoImageViews {
-            photo.image = nil
-        }
-        
-        for button in plusButtons {
-            button.isHidden = false
+    func eraseGrid() {
+        if isEmpty() {
+            // Grid empty, no alert message needed
+            resetGrid()
+        } else {
+            displayAlertDelegate.showEraseAlert(title: "Erase", message: "Do you want to erase grid ?")
         }
     }
     
@@ -96,14 +93,25 @@ class GridView: UIView {
         return true
     }
     
-    func eraseGrid() {
-        if isEmpty() {
-            // Grid empty, no alert message needed
-            //eraseImages()
-            resetGrid()
-        } else {
-            displayAlertDelegate.eraseAlert(title: "", message: "Do you want to erase grid ?")
+    func eraseImages() {
+        for photo in photoImageViews {
+            photo.image = nil
         }
+        
+        for button in plusButtons {
+            button.isHidden = false
+        }
+    }
+    
+    func resetGrid() {
+        eraseImages()
+        // Original background color
+        backgroundColor = #colorLiteral(red: 0.06274509804, green: 0.4, blue: 0.5960784314, alpha: 1)
+        colorIndex = 0
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.transform = .identity
+        })
     }
     
     // Make sure the grid selection is complete
@@ -130,17 +138,5 @@ class GridView: UIView {
         }
         
         return backgroundColors[colorIndex]
-    }
-    
-    func resetGrid() {
-        eraseImages()
-        // Original background color
-        backgroundColor = #colorLiteral(red: 0.06274509804, green: 0.4, blue: 0.5960784314, alpha: 1)
-        colorIndex = 0
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            self.transform = .identity
-        })
-        
     }
 }

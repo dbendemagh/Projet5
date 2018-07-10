@@ -57,23 +57,23 @@ class MainVC: UIViewController {
     }
     
     private func addGesturesRecognizer() {
-        // Images gesture recognizer
-        gridView.photoImageViews.forEach {
-            $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped(gesture:))))
-            $0.isUserInteractionEnabled = true
-        }
-        
         // Share Gesture recognizer
         shareSwipeGR.direction = .up
         arrowImageView.addGestureRecognizer(shareSwipeGR)
         arrowImageView.isUserInteractionEnabled = true
         
-        // Bonus - Double tap gesture recognizer on Gridview
+        // Bonus - Select other image
+        gridView.photoImageViews.forEach {
+            $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped(gesture:))))
+            $0.isUserInteractionEnabled = true
+        }
+        
+        // Bonus - Modify Gridview backgroundcolor with double tap
         let TapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(gridviewDoubleTapped(gesture:)))
         TapGestureRecogniser.numberOfTapsRequired = 2
         gridView.addGestureRecognizer(TapGestureRecogniser)
         
-        // Bonus - Erase Gesture recognizer on Gridview
+        // Bonus - Erase Grid with swipe
         eraseSwipeGR.direction = .down
         gridView.addGestureRecognizer(eraseSwipeGR)
     }
@@ -125,21 +125,24 @@ class MainVC: UIViewController {
     }
     
     private func gridAction(actionType: ActionType) {
-        // Share : up or left animation
-        var position = -view.frame.height
         
-        if actionType == .erase {
-            // Erase : right or down animation
-            position = abs(position)
-        }
+        var position: CGFloat
         
         switch UIDevice.current.orientation {
         case .portrait:
+            position = -view.frame.height
+            if actionType == .erase {
+                // Erase : right animation
+                position = abs(position)
+            }
             gridAnimation(actionType: actionType, transform: CGAffineTransform(translationX: 0, y: position))
-            //shareAnimation(transform: CGAffineTransform(translationX: 0, y: position), duration: 0.5)
         case .landscapeLeft, .landscapeRight:
+            position = -view.frame.width
+            if actionType == .erase {
+                // Erase : down animation
+                position = abs(position)
+            }
             gridAnimation(actionType: actionType, transform: CGAffineTransform(translationX: position, y: 0))
-            //shareAnimation(transform: CGAffineTransform(translationX: position, y: 0), duration: 0.5)
         default:
             break
         }
@@ -171,7 +174,7 @@ class MainVC: UIViewController {
 
     private func share() {
         if gridView.missingImage() {
-            alert(title: "Missing image", message: "You have not selected all images.") {
+            showAlert(title: "Missing image", message: "You have not selected all images.") {
                 self.gridAnimationBack(actionType: .share)
             }
         } else {
@@ -192,7 +195,6 @@ class MainVC: UIViewController {
     }
     
     @objc func imageTapped(gesture: UIGestureRecognizer) {
-        
         guard let tag = gesture.view?.tag else { return }
         
         if gridView.plusIsHidden(tag: tag) {
@@ -205,13 +207,13 @@ class MainVC: UIViewController {
         gridView.setBackgroundColor()
     }
     
-    /// Alert info
+    /// showAlert info
     ///
     /// - Parameters:
     ///   - title: Alert title
     ///   - message: Alert message
     ///   - actionButton: Method for OK button
-    func alert(title: String, message: String, actionButton: @escaping () -> ()) {
+    func showAlert(title: String, message: String, actionButton: @escaping () -> ()) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
@@ -256,11 +258,10 @@ extension MainVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
 
 extension MainVC: GridViewDelegate {
     // Question alert before erase grid
-    func eraseAlert(title: String, message: String) {
+    func showEraseAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
-            //self.gridView.eraseImages()
             self.gridView.resetGrid()
         }))
         alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { (action) in
@@ -269,6 +270,5 @@ extension MainVC: GridViewDelegate {
         }))
         present(alert, animated: true, completion: nil)
     }
-    
 }
 
