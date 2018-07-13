@@ -62,7 +62,7 @@ class MainVC: UIViewController {
         arrowImageView.addGestureRecognizer(shareSwipeGR)
         arrowImageView.isUserInteractionEnabled = true
         
-        // Bonus - Select other image
+        // Select other image
         gridView.photoImageViews.forEach {
             $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped(gesture:))))
             $0.isUserInteractionEnabled = true
@@ -125,7 +125,6 @@ class MainVC: UIViewController {
     }
     
     private func gridAction(actionType: ActionType) {
-        
         var position: CGFloat
         
         switch UIDevice.current.orientation {
@@ -247,7 +246,7 @@ extension MainVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
             imagePicker.sourceType = sourceType
             present(imagePicker, animated: true, completion: nil)
         } else {
-            showAlert(title: "Erreur", message: "Le media n'est pas disponible." , actionButton: {})
+            showAlert(title: "Error", message: "The media is not available." , actionButton: {})
         }
     }
     
