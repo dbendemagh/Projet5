@@ -187,9 +187,7 @@ class MainVC: UIViewController {
         present(activityController, animated: true, completion: nil)
         
         activityController.completionWithItemsHandler = {(nil, completed: Bool, _, error) in
-            if !completed {
-                self.gridAnimationBack(actionType: .share)
-            }
+            self.gridAnimationBack(actionType: .share)
         }
     }
     
