@@ -1,5 +1,8 @@
-# Projet5
-Instagrid : Une application de montage photo
+# Projet 5 - Instagrid
+## Une application de partage de photos
+
+![](Documentation/Instagrid.png)
+![](Documentation/Rotation.png)
 
 Fonctionnalités supplémentaires en bonus :
 

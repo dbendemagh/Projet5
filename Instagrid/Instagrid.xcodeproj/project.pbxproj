@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		653ED32B24C5CCC200E50C13 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 653ED32A24C5CCC100E50C13 /* README.md */; };
 		659224FC20A898E7004249DA /* ThirstySoftRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659224FB20A898E7004249DA /* ThirstySoftRegular.otf */; };
 		6592254220BEBE9D004249DA /* UIImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6592254120BEBE9C004249DA /* UIImagePickerController.swift */; };
 		6592254320BEBFE8004249DA /* Delm-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659224FD20A898F8004249DA /* Delm-Medium.otf */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		653ED32A24C5CCC100E50C13 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		659224FB20A898E7004249DA /* ThirstySoftRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ThirstySoftRegular.otf; sourceTree = "<group>"; };
 		659224FD20A898F8004249DA /* Delm-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Delm-Medium.otf"; sourceTree = "<group>"; };
 		6592254120BEBE9C004249DA /* UIImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImagePickerController.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 		65C2A2EA20A234B300C2B025 = {
 			isa = PBXGroup;
 			children = (
+				653ED32A24C5CCC100E50C13 /* README.md */,
 				65C2A2F520A234B300C2B025 /* Instagrid */,
 				65C2A2F420A234B300C2B025 /* Products */,
 			);
@@ -151,6 +154,7 @@
 				TargetAttributes = {
 					65C2A2F220A234B300C2B025 = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1160;
 					};
 				};
 			};
@@ -177,6 +181,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				653ED32B24C5CCC200E50C13 /* README.md in Resources */,
 				65C2A30120A234B400C2B025 /* LaunchScreen.storyboard in Resources */,
 				6592254320BEBFE8004249DA /* Delm-Medium.otf in Resources */,
 				65C2A2FE20A234B400C2B025 /* Assets.xcassets in Resources */,
@@ -352,7 +357,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = fr.dbendemagh.Instagrid;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -373,7 +378,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = fr.dbendemagh.Instagrid;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

@@ -44,7 +44,7 @@ class MainVC: UIViewController {
         
         addGesturesRecognizer()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientionDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientionDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
         
         // start with the second layout
         gridView.displayLayout(buttonTag: 1)
@@ -69,9 +69,9 @@ class MainVC: UIViewController {
         }
         
         // Bonus - Modify Gridview backgroundcolor with double tap
-        let TapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(gridviewDoubleTapped(gesture:)))
-        TapGestureRecogniser.numberOfTapsRequired = 2
-        gridView.addGestureRecognizer(TapGestureRecogniser)
+        let tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(gridviewDoubleTapped(gesture:)))
+        tapGestureRecogniser.numberOfTapsRequired = 2
+        gridView.addGestureRecognizer(tapGestureRecogniser)
         
         // Bonus - Erase Grid with swipe
         eraseSwipeGR.direction = .down
@@ -239,7 +239,7 @@ extension MainVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
     }
     
     // Get image from Photo Library or Camera
-    func getImageFrom(sourceType: UIImagePickerControllerSourceType) {
+    func getImageFrom(sourceType: UIImagePickerController.SourceType) {
         if (UIImagePickerController .isSourceTypeAvailable(sourceType)) {
             imagePicker.sourceType = sourceType
             present(imagePicker, animated: true, completion: nil)
@@ -249,8 +249,11 @@ extension MainVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
     }
     
     // set Image at the right position
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
+        if let pickedImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage {
             gridView.setPhoto(photo: pickedImage, tag: imageSelected)
             dismiss(animated: true, completion: nil)
         }
@@ -273,3 +276,13 @@ extension MainVC: GridViewDelegate {
     }
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
+}
